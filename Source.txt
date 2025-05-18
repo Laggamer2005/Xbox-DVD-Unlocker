@@ -1,0 +1,50 @@
+# Xbox DVD Playback Unlocker
+
+#include <stdint.h>
+
+struct {
+  uint8_t check_high; // 8 bit check
+  uint8_t check_low__data_high; // 4 bit check, 4 bit data
+  uint8_t data_low; // 8 bit data
+};
+
+uint16_t calculate_check(uint8_t check_high, uint8_t check_low, uint8_t data_high, uint8_t data_low) {
+  uint16_t check = (check_high << 4) | check_low;
+  uint16_t data = (data_high << 8) | data_low;
+  return check ^ data;
+}
+
+void dvd_control(uint8_t command) {
+  switch (command) {
+    case 0xE6: // Pause
+      // Implement pause functionality
+      break;
+    case 0xE3: // Fast Forward
+      // Implement fast forward functionality
+      break;
+    case 0xE2: // Rewind
+      // Implement rewind functionality
+      break;
+    case 0xDD: // Skip -
+      // Implement skip backward functionality
+      break;
+    case 0xDF: // Skip +
+      // Implement skip forward functionality
+      break;
+    default:
+      // Handle other commands
+      break;
+  }
+}
+
+void main() {
+  // Initialize DVD playback
+  uint8_t check_high = 0b0101;
+  uint8_t check_low = 0x0A;
+  uint8_t data_high = 0x00; // Example data high
+  uint8_t data_low = 0x00; // Example data low
+
+  if (calculate_check(check_high, check_low, data_high, data_low) == 0xFFF) {
+    // Proceed with DVD playback
+  }
+}
